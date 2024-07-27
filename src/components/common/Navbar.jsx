@@ -1,4 +1,4 @@
-import logo from "../assets/smit-logo.png";
+import logo from "../../assets/smit-logo.png";
 
 const Navbar = () => {
   return (

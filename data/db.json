@@ -1,0 +1,108 @@
+{
+  "metrics": {
+    "totalQuizzes": 10,
+    "totalStudents": 150,
+    "averageScore": 85,
+    "recentActivities": [
+      {
+        "id": 1,
+        "activity": "Quiz 'Math Basics' created"
+      },
+      {
+        "id": 2,
+        "activity": "Student John Doe completed 'Science Quiz'"
+      }
+    ]
+  },
+  "quizzes": [
+    {
+      "id": "1",
+      "title": "Math Basics",
+      "description": "A quiz on basic math concepts.",
+      "questions": [
+        {
+          "text": "What is 2+2?",
+          "type": "multipleChoice",
+          "options": ["2", "3", "4", "5"],
+          "answer": "4"
+        },
+        {
+          "text": "What is 5-3?",
+          "type": "multipleChoice",
+          "options": ["1", "2", "3", "4"],
+          "answer": "2"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "title": "Science Quiz",
+      "description": "A quiz on basic science concepts.",
+      "questions": [
+        {
+          "text": "What is H2O?",
+          "type": "shortAnswer",
+          "answer": "Water"
+        },
+        {
+          "text": "What planet is known as the Red Planet?",
+          "type": "shortAnswer",
+          "answer": "Mars"
+        }
+      ]
+    },
+    {
+      "id": "a11e",
+      "title": "English Quiz",
+      "description": "A quiz on basic english concepts",
+      "questions": [
+        {
+          "text": "what is noun",
+          "type": "shortAnswer"
+        }
+      ]
+    }
+  ],
+  "students": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "enrolledQuizzes": [1, 2]
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "janesmith@example.com",
+      "enrolledQuizzes": [1]
+    }
+  ],
+  "quizReports": [
+    {
+      "id": "1",
+      "quizId": 1,
+      "studentId": 1,
+      "score": 90,
+      "dateTaken": "2024-07-01"
+    },
+    {
+      "id": "2",
+      "quizId": 1,
+      "studentId": 2,
+      "score": 85,
+      "dateTaken": "2024-07-02"
+    },
+    {
+      "id": "3",
+      "quizId": 2,
+      "studentId": 1,
+      "score": 88,
+      "dateTaken": "2024-07-03"
+    }
+  ],
+  "settings": {
+    "siteName": "QuizMaster",
+    "adminEmail": "admin@quizmaster.com",
+    "userRoles": ["admin", "student", "guest"]
+  }
+}
