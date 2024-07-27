@@ -1,12 +1,25 @@
 import { useState } from "react";
-import QuestionForm from "../../components/quiz/QuestionForm";
-import { TextField, Button } from "@mui/material";
 import axios from "axios";
+import QuizInfoForm from "../../components/quiz/createQuiz/QuizInfoForm";
+import AdditionalSettings from "../../components/quiz/createQuiz/AdditionalSettings";
+import SecondaryButton from "../../components/common/SecondaryButton";
+import PrimaryButton from "../../components/common/PrimaryButton";
 
 const CreateQuiz = () => {
   const [quiz, setQuiz] = useState({
     title: "",
     description: "",
+    course: "",
+    deadline: "",
+    duration: "",
+    location_restriction: false,
+    tab_switching_restriction: false,
+    custom_mode: false,
+    time_limits: {
+      easy: 0,
+      medium: 0,
+      difficult: 0,
+    },
     questions: [],
   });
 
@@ -15,23 +28,14 @@ const CreateQuiz = () => {
     setQuiz({ ...quiz, [name]: value });
   };
 
-  const addQuestion = () => {
-    setQuiz({
-      ...quiz,
-      questions: [...quiz.questions, { text: "", type: "multipleChoice" }],
-    });
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setQuiz({ ...quiz, [name]: checked });
   };
 
-  const updateQuestion = (index, updatedQuestion) => {
-    const updatedQuestions = quiz.questions.map((question, i) =>
-      i === index ? updatedQuestion : question
-    );
-    setQuiz({ ...quiz, questions: updatedQuestions });
-  };
-
-  const deleteQuestion = (index) => {
-    const updatedQuestions = quiz.questions.filter((_, i) => i !== index);
-    setQuiz({ ...quiz, questions: updatedQuestions });
+  const handleTimeLimitChange = (e) => {
+    const { name, value } = e.target;
+    setQuiz({ ...quiz, time_limits: { ...quiz.time_limits, [name]: value } });
   };
 
   const handleSubmit = (e) => {
@@ -39,7 +43,22 @@ const CreateQuiz = () => {
     axios
       .post("http://localhost:5000/quizzes", quiz)
       .then(() => {
-        setQuiz({ title: "", description: "", questions: [] });
+        setQuiz({
+          title: "",
+          description: "",
+          course: "",
+          deadline: "",
+          duration: "",
+          location_restriction: false,
+          tab_switching_restriction: false,
+          custom_mode: false,
+          time_limits: {
+            easy: 0,
+            medium: 0,
+            difficult: 0,
+          },
+          questions: [],
+        });
         alert("Quiz created successfully!");
       })
       .catch((error) => {
@@ -47,47 +66,38 @@ const CreateQuiz = () => {
       });
   };
 
+  const handleCancel = () => {
+    setQuiz({
+      title: "",
+      description: "",
+      course: "",
+      deadline: "",
+      duration: "",
+      location_restriction: false,
+      tab_switching_restriction: false,
+      custom_mode: false,
+      time_limits: {
+        easy: 0,
+        medium: 0,
+        difficult: 0,
+      },
+      questions: [],
+    });
+  };
+
   return (
     <div className="flex-1 p-4 bg-gray-100">
       <form className="bg-white shadow rounded p-6" onSubmit={handleSubmit}>
-        <TextField
-          label="Quiz Title"
-          name="title"
-          value={quiz.title}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
+        <QuizInfoForm quiz={quiz} handleChange={handleChange} />
+        <AdditionalSettings
+          quiz={quiz}
+          handleCheckboxChange={handleCheckboxChange}
+          handleTimeLimitChange={handleTimeLimitChange}
         />
-        <TextField
-          label="Description"
-          name="description"
-          value={quiz.description}
-          onChange={handleChange}
-          fullWidth
-          margin="normal"
-          multiline
-          rows={4}
-        />
-        {quiz.questions.map((question, index) => (
-          <QuestionForm
-            key={index}
-            question={question}
-            index={index}
-            updateQuestion={updateQuestion}
-            deleteQuestion={deleteQuestion}
-          />
-        ))}
-        <Button variant="contained" color="primary" onClick={addQuestion}>
-          Add Question
-        </Button>
-        <Button
-          type="submit"
-          variant="contained"
-          color="secondary"
-          className="ml-4"
-        >
-          Save Quiz
-        </Button>
+        <div className="flex justify-end space-x-4">
+          <SecondaryButton text="Cancel" onClick={handleCancel} />
+          <PrimaryButton text="Add Questions" />
+        </div>
       </form>
     </div>
   );

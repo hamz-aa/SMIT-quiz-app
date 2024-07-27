@@ -16,9 +16,20 @@
   },
   "quizzes": [
     {
-      "id": "1",
+      "id": 1,
       "title": "Math Basics",
       "description": "A quiz on basic math concepts.",
+      "course": "Mathematics",
+      "deadline": "2024-12-31T23:59",
+      "duration": 60,
+      "location_restriction": false,
+      "tab_switching_restriction": false,
+      "custom_mode": false,
+      "time_limits": {
+        "easy": 0,
+        "medium": 0,
+        "difficult": 0
+      },
       "questions": [
         {
           "text": "What is 2+2?",
@@ -31,34 +42,6 @@
           "type": "multipleChoice",
           "options": ["1", "2", "3", "4"],
           "answer": "2"
-        }
-      ]
-    },
-    {
-      "id": "2",
-      "title": "Science Quiz",
-      "description": "A quiz on basic science concepts.",
-      "questions": [
-        {
-          "text": "What is H2O?",
-          "type": "shortAnswer",
-          "answer": "Water"
-        },
-        {
-          "text": "What planet is known as the Red Planet?",
-          "type": "shortAnswer",
-          "answer": "Mars"
-        }
-      ]
-    },
-    {
-      "id": "a11e",
-      "title": "English Quiz",
-      "description": "A quiz on basic english concepts",
-      "questions": [
-        {
-          "text": "what is noun",
-          "type": "shortAnswer"
         }
       ]
     }
