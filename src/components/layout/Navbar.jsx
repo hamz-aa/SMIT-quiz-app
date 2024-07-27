@@ -105,7 +105,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
             gap: "1rem",
           }}
         >
-          <button
+          {/* <button
             className="scale-100 hover:scale-110 transition-all duration-200"
             onClick={handleNotificationsOpen}
           >
@@ -115,7 +115,7 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen }) => {
               />
               <span className="absolute top-0 right-0 block h-2 w-2 rounded-full ring-2 ring-white bg-red-600"></span>
             </div>
-          </button>
+          </button> */}
           <Menu
             anchorEl={notificationAnchorEl}
             open={Boolean(notificationAnchorEl)}

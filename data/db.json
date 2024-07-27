@@ -65,15 +65,17 @@
   ],
   "students": [
     {
-      "id": "1",
+      "id": 1,
       "name": "John Doe",
       "email": "johndoe@example.com",
+      "engagement": "high",
       "enrolledQuizzes": [1, 2]
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Jane Smith",
       "email": "janesmith@example.com",
+      "engagement": "medium",
       "enrolledQuizzes": [1]
     }
   ],

@@ -95,6 +95,8 @@ const Sidebar = ({
                 alignItems="center"
                 gap="0.5rem"
                 width="120px"
+                margin="25px"
+                // backgroundColor="red"
               >
                 <img src={logo} alt="Logo" />
               </Box>
