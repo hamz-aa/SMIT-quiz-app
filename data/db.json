@@ -16,7 +16,7 @@
   },
   "quizzes": [
     {
-      "id": 1,
+      "id": "1",
       "title": "Math Basics",
       "description": "A quiz on basic math concepts.",
       "course": "Mathematics",
@@ -34,32 +34,81 @@
         {
           "text": "What is 2+2?",
           "type": "multipleChoice",
-          "options": ["2", "3", "4", "5"],
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
           "answer": "4"
         },
         {
           "text": "What is 5-3?",
           "type": "multipleChoice",
-          "options": ["1", "2", "3", "4"],
+          "options": [
+            "1",
+            "2",
+            "3",
+            "4"
+          ],
           "answer": "2"
         }
       ]
+    },
+    {
+      "id": "441d",
+      "title": "English Quiz",
+      "description": "this is an english quiz",
+      "course": "english",
+      "deadline": "2024-07-28T17:17",
+      "duration": "30",
+      "location_restriction": false,
+      "tab_switching_restriction": false,
+      "custom_mode": false,
+      "time_limits": {
+        "easy": 0,
+        "medium": 0,
+        "difficult": 0
+      },
+      "questions": []
+    },
+    {
+      "id": "faf3",
+      "title": "English Quiz",
+      "description": "this is an english quiz",
+      "course": "english",
+      "deadline": "2024-07-29T17:20",
+      "duration": "30",
+      "location_restriction": true,
+      "tab_switching_restriction": true,
+      "custom_mode": true,
+      "time_limits": {
+        "easy": "3",
+        "medium": "4",
+        "difficult": "5"
+      },
+      "questions": []
     }
   ],
   "students": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John Doe",
       "email": "johndoe@example.com",
       "engagement": "high",
-      "enrolledQuizzes": [1, 2]
+      "enrolledQuizzes": [
+        1,
+        2
+      ]
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Jane Smith",
       "email": "janesmith@example.com",
       "engagement": "medium",
-      "enrolledQuizzes": [1]
+      "enrolledQuizzes": [
+        1
+      ]
     }
   ],
   "quizReports": [
@@ -88,6 +137,10 @@
   "settings": {
     "siteName": "QuizMaster",
     "adminEmail": "admin@quizmaster.com",
-    "userRoles": ["admin", "student", "guest"]
+    "userRoles": [
+      "admin",
+      "student",
+      "guest"
+    ]
   }
 }

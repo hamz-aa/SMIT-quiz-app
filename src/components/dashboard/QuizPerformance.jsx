@@ -10,7 +10,6 @@ const QuizPerformance = () => {
       .get("http://localhost:5000/quizzes")
       .then((response) => {
         const data = response.data;
-        console.log("Fetched quizzes data:", data); // Debugging log
 
         if (Array.isArray(data) && data.length > 0) {
           const labels = data.map((quiz) => quiz.title);

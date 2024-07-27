@@ -10,7 +10,6 @@ const StudentEngagement = () => {
       .get("http://localhost:5000/students")
       .then((response) => {
         const data = response.data;
-        console.log("Fetched students data:", data); // Debugging log
 
         if (Array.isArray(data) && data.length > 0) {
           const highEngagement = data.filter(
