@@ -6,6 +6,7 @@ import ManageStudents from "./pages/admin/ManageStudents";
 import QuizReport from "./pages/admin/QuizReport";
 import Settings from "./pages/admin/Settings";
 import Layout from "./layout/Layout";
+import EditQuiz from "./pages/admin/EditQuiz";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route exact path="/dashboard" element={<AdminDashboard />} />
           <Route exact path="/create-quiz" element={<CreateQuiz />} />
           <Route exact path="/manage-quiz" element={<ManageQuiz />} />
+          <Route exact path="/edit-quiz/:id" element={<EditQuiz />} />
           <Route exact path="/manage-students" element={<ManageStudents />} />
           <Route exact path="/quiz-reports" element={<QuizReport />} />
           <Route exact path="/settings" element={<Settings />} />

@@ -1,21 +1,12 @@
 import { useState } from "react";
-import { TextField, Select, MenuItem, IconButton, Button } from "@mui/material";
-import { AddCircleOutline, Delete } from "@mui/icons-material";
-import PrimaryButton from "../../../components/common/PrimaryButton";
-import SecondaryButton from "../../../components/common/SecondaryButton";
+import { TextField, Select, MenuItem, IconButton } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import PrimaryButton from "../common/PrimaryButton";
+import SecondaryButton from "../common/SecondaryButton";
 import ViewQuiz from "./ViewQuiz";
 
 const AddQuestions = ({ quiz, setQuiz, handleCreateQuiz, handleCancel }) => {
-  const [questions, setQuestions] = useState([
-    {
-      id: 1,
-      type: "singleChoice",
-      points: 3,
-      difficulty: "easy",
-      question: "",
-      options: [""],
-    },
-  ]);
+  const [questions, setQuestions] = useState(quiz.questions || []);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
 
   const handleQuestionChange = (index, field, value) => {
@@ -57,7 +48,9 @@ const AddQuestions = ({ quiz, setQuiz, handleCreateQuiz, handleCancel }) => {
   };
 
   const saveQuiz = () => {
-    setQuiz({ ...quiz, questions });
+    const updatedQuiz = { ...quiz, questions };
+    setQuiz(updatedQuiz);
+    handleCreateQuiz(updatedQuiz);
     setIsViewingQuiz(true);
   };
 
@@ -184,7 +177,7 @@ const AddQuestions = ({ quiz, setQuiz, handleCreateQuiz, handleCancel }) => {
       </div>
       <div className="flex justify-end space-x-4">
         <PrimaryButton text="Cancel" onClick={handleCancel} />
-        <SecondaryButton text="Create Quiz" onClick={saveQuiz} />
+        <SecondaryButton text="Save Quiz" onClick={saveQuiz} />
       </div>
     </div>
   );

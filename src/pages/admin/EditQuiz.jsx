@@ -1,31 +1,32 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import QuizInfoForm from "../../components/quiz/QuizInfoForm";
 import AdditionalSettings from "../../components/quiz/AdditionalSettings";
 import AddQuestions from "../../components/quiz/AddQuestions";
 import SecondaryButton from "../../components/common/SecondaryButton";
 import PrimaryButton from "../../components/common/PrimaryButton";
+import ViewQuiz from "../../components/quiz/ViewQuiz";
+import { useParams } from "react-router-dom";
 
-const CreateQuiz = () => {
-  const [quiz, setQuiz] = useState({
-    title: "",
-    description: "",
-    course: "",
-    deadline: "",
-    duration: "",
-    location_restriction: false,
-    tab_switching_restriction: false,
-    custom_mode: false,
-    time_limits: {
-      easy: 0,
-      medium: 0,
-      difficult: 0,
-    },
-    questions: [],
-  });
-
+const EditQuiz = () => {
+  const { id } = useParams();
+  const [quiz, setQuiz] = useState(null);
   const [isAddingQuestions, setIsAddingQuestions] = useState(false);
+  const [isViewingQuiz, setIsViewingQuiz] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    const fetchQuiz = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/quizzes/${id}`);
+        setQuiz(response.data);
+      } catch (error) {
+        console.error("There was an error fetching the quiz!", error);
+      }
+    };
+
+    fetchQuiz();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,52 +43,23 @@ const CreateQuiz = () => {
     setQuiz({ ...quiz, time_limits: { ...quiz.time_limits, [name]: value } });
   };
 
-  const handleCreateQuiz = (updatedQuiz) => {
+  const handleUpdateQuiz = (updatedQuiz) => {
     axios
-      .post("http://localhost:5000/quizzes", updatedQuiz)
+      .put(`http://localhost:5000/quizzes/${id}`, updatedQuiz)
       .then(() => {
-        setQuiz({
-          title: "",
-          description: "",
-          course: "",
-          deadline: "",
-          duration: "",
-          location_restriction: false,
-          tab_switching_restriction: false,
-          custom_mode: false,
-          time_limits: {
-            easy: 0,
-            medium: 0,
-            difficult: 0,
-          },
-          questions: [],
-        });
-        alert("Quiz created successfully!");
+        setQuiz(updatedQuiz);
+        alert("Quiz updated successfully!");
         setIsAddingQuestions(false);
+        setIsViewingQuiz(true);
       })
       .catch((error) => {
-        console.error("There was an error creating the quiz!", error);
+        console.error("There was an error updating the quiz!", error);
       });
   };
 
   const handleCancel = () => {
-    setQuiz({
-      title: "",
-      description: "",
-      course: "",
-      deadline: "",
-      duration: "",
-      location_restriction: false,
-      tab_switching_restriction: false,
-      custom_mode: false,
-      time_limits: {
-        easy: 0,
-        medium: 0,
-        difficult: 0,
-      },
-      questions: [],
-    });
     setIsAddingQuestions(false);
+    setIsViewingQuiz(false);
   };
 
   const handleAddQuestions = () => {
@@ -105,12 +77,20 @@ const CreateQuiz = () => {
     setIsAddingQuestions(true);
   };
 
+  if (!quiz) {
+    return <p>Loading...</p>;
+  }
+
+  if (isViewingQuiz) {
+    return <ViewQuiz quiz={quiz} handleCancel={handleCancel} />;
+  }
+
   if (isAddingQuestions) {
     return (
       <AddQuestions
         quiz={quiz}
         setQuiz={setQuiz}
-        handleCreateQuiz={handleCreateQuiz}
+        handleCreateQuiz={handleUpdateQuiz}
         handleCancel={handleCancel}
       />
     );
@@ -128,11 +108,11 @@ const CreateQuiz = () => {
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <div className="flex justify-end space-x-4">
           <SecondaryButton text="Cancel" onClick={handleCancel} />
-          <PrimaryButton text="Add Questions" onClick={handleAddQuestions} />
+          <PrimaryButton text="Edit Questions" onClick={handleAddQuestions} />
         </div>
       </form>
     </div>
   );
 };
 
-export default CreateQuiz;
+export default EditQuiz;

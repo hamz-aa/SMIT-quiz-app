@@ -37,8 +37,7 @@
           "options": [
             "2",
             "3",
-            "4",
-            "5"
+            "4"
           ],
           "answer": "4"
         },
@@ -56,11 +55,11 @@
       ]
     },
     {
-      "id": "441d",
+      "id": "a188",
       "title": "English Quiz",
-      "description": "this is an english quiz",
-      "course": "english",
-      "deadline": "2024-07-28T17:17",
+      "description": "This is an english quiz",
+      "course": "English",
+      "deadline": "2024-07-31T19:02",
       "duration": "30",
       "location_restriction": false,
       "tab_switching_restriction": false,
@@ -70,24 +69,46 @@
         "medium": 0,
         "difficult": 0
       },
-      "questions": []
+      "questions": [
+        {
+          "id": 1,
+          "type": "shortAnswer",
+          "points": 3,
+          "difficulty": "easy",
+          "question": "Who are you?",
+          "options": [
+            ""
+          ]
+        }
+      ]
     },
     {
-      "id": "faf3",
-      "title": "English Quiz",
-      "description": "this is an english quiz",
-      "course": "english",
-      "deadline": "2024-07-29T17:20",
-      "duration": "30",
-      "location_restriction": true,
-      "tab_switching_restriction": true,
-      "custom_mode": true,
+      "id": "2ace",
+      "title": "gf",
+      "description": "dg",
+      "course": "gf",
+      "deadline": "2024-07-28",
+      "duration": "45",
+      "location_restriction": false,
+      "tab_switching_restriction": false,
+      "custom_mode": false,
       "time_limits": {
-        "easy": "3",
-        "medium": "4",
-        "difficult": "5"
+        "easy": 0,
+        "medium": 0,
+        "difficult": 0
       },
-      "questions": []
+      "questions": [
+        {
+          "id": 1,
+          "type": "singleChoice",
+          "points": 3,
+          "difficulty": "easy",
+          "question": "dfgd",
+          "options": [
+            "fg"
+          ]
+        }
+      ]
     }
   ],
   "students": [

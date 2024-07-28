@@ -1,10 +1,15 @@
 import { TextField } from "@mui/material";
+import { format } from "date-fns";
 
 const QuizInfoForm = ({ quiz, handleChange }) => {
+  const formattedDeadline = quiz.deadline
+    ? format(new Date(quiz.deadline), "yyyy-MM-dd")
+    : "";
+
   return (
     <>
       <TextField
-        label="Quiz Title"
+        label="Title"
         name="title"
         value={quiz.title}
         onChange={handleChange}
@@ -18,8 +23,6 @@ const QuizInfoForm = ({ quiz, handleChange }) => {
         onChange={handleChange}
         fullWidth
         margin="normal"
-        multiline
-        rows={4}
       />
       <TextField
         label="Course"
@@ -32,12 +35,14 @@ const QuizInfoForm = ({ quiz, handleChange }) => {
       <TextField
         label="Deadline"
         name="deadline"
-        type="datetime-local"
-        value={quiz.deadline}
+        type="date"
+        value={formattedDeadline}
         onChange={handleChange}
         fullWidth
         margin="normal"
-        InputLabelProps={{ shrink: true }}
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
       <TextField
         label="Duration (minutes)"
