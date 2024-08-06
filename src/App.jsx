@@ -3,10 +3,11 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import CreateQuiz from "./pages/admin/CreateQuiz";
 import ManageQuiz from "./pages/admin/ManageQuiz";
 import ManageStudents from "./pages/admin/ManageStudents";
-import QuizReport from "./pages/admin/QuizReport";
+import QuizReports from "./pages/admin/QuizReports";
 import Settings from "./pages/admin/Settings";
 import Layout from "./layout/Layout";
 import EditQuiz from "./pages/admin/EditQuiz";
+import QuizReportDetails from "./pages/admin/QuizReportDetails";
 
 function App() {
   return (
@@ -19,7 +20,12 @@ function App() {
           <Route exact path="/manage-quiz" element={<ManageQuiz />} />
           <Route exact path="/edit-quiz/:id" element={<EditQuiz />} />
           <Route exact path="/manage-students" element={<ManageStudents />} />
-          <Route exact path="/quiz-reports" element={<QuizReport />} />
+          <Route exact path="/quiz-reports" element={<QuizReports />} />
+          <Route
+            exact
+            path="/quiz-reports/:quizId/:batch/:instructor"
+            element={<QuizReportDetails />}
+          />
           <Route exact path="/settings" element={<Settings />} />
         </Route>
       </Routes>
