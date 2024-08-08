@@ -36,28 +36,34 @@ const Sidebar = ({
   }, [location.pathname]);
 
   const navItems = [
-    { text: "Dashboard", icon: <BsFillFileBarGraphFill />, to: "/dashboard" },
+    { text: "Dashboard", icon: <BsFillFileBarGraphFill />, to: "/admin" },
     {
       text: "Manage Quizzes",
       icon: <MdAccountCircle />,
-      to: "/manage-quiz",
+      to: "/admin/manage-quiz",
     },
     {
       text: "Create Quizzes",
       icon: <MdAccountCircle />,
-      to: "/create-quiz",
+      to: "/admin/create-quiz",
     },
     {
       text: "Manage Students",
       icon: <FaFileInvoice />,
-      to: "/manage-students",
+      to: "/admin/manage-students",
     },
-    { text: "Quiz Reports", icon: <HiSpeakerphone />, to: "/quiz-reports" },
-    { text: "Settings", icon: <FaLightbulb />, to: "/settings" },
+    {
+      text: "Quiz Reports",
+      icon: <HiSpeakerphone />,
+      to: "/admin/quiz-reports",
+    },
+    { text: "Settings", icon: <FaLightbulb />, to: "/admin/settings" },
   ];
 
   const checkActive = (to) => {
-    return location.pathname.includes(to);
+    console.log(location.pathname, " loc");
+    console.log(to, " to");
+    return location.pathname === to;
   };
 
   return (

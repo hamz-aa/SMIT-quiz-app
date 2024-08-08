@@ -10,26 +10,37 @@ import EditQuiz from "./pages/admin/EditQuiz";
 import QuizReportDetails from "./pages/admin/QuizReportDetails";
 import QuizCard from "./pages/student/QuizCard";
 import Quiz from "./pages/student/Quiz";
+import Login from "./pages/authentication/Login";
+import Signup from "./pages/authentication/Signup";
+import Home from "./pages/homepage/Home";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* homepage */}
+        <Route exact path="/" element={<Home />} />
+        {/* auth routes */}
+        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/signup" element={<Signup />} />
         {/* admin routes */}
-        <Route path="/" element={<Layout />}>
-          <Route index element={<AdminDashboard />} />
-          <Route exact path="/dashboard" element={<AdminDashboard />} />
-          <Route exact path="/create-quiz" element={<CreateQuiz />} />
-          <Route exact path="/manage-quiz" element={<ManageQuiz />} />
-          <Route exact path="/edit-quiz/:id" element={<EditQuiz />} />
-          <Route exact path="/manage-students" element={<ManageStudents />} />
-          <Route exact path="/quiz-reports" element={<QuizReports />} />
+        <Route element={<Layout />}>
+          <Route exact path="/admin" element={<AdminDashboard />} />
+          <Route exact path="/admin/create-quiz" element={<CreateQuiz />} />
+          <Route exact path="/admin/manage-quiz" element={<ManageQuiz />} />
+          <Route exact path="/admin/edit-quiz/:id" element={<EditQuiz />} />
           <Route
             exact
-            path="/quiz-reports/:quizId/:batch/:instructor"
+            path="/admin/manage-students"
+            element={<ManageStudents />}
+          />
+          <Route exact path="/admin/quiz-reports" element={<QuizReports />} />
+          <Route
+            exact
+            path="/admin/quiz-reports/:quizId/:batch/:instructor"
             element={<QuizReportDetails />}
           />
-          <Route exact path="/settings" element={<Settings />} />
+          <Route exact path="/admin/settings" element={<Settings />} />
         </Route>
         {/* student routes */}
         <Route exact path="/student/quizzes" element={<QuizCard />} />
