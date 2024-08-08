@@ -37,7 +37,41 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+2?",
-          "options": ["2", "3", "4", "5"]
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct_answer": "4"
+        },
+        {
+          "id": 1,
+          "type": "singleChoice",
+          "points": 3,
+          "difficulty": "easy",
+          "question": "What is 2+3?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "5"
+          ],
+          "correct_answer": "5"
+        },
+        {
+          "id": 1,
+          "type": "singleChoice",
+          "points": 3,
+          "difficulty": "easy",
+          "question": "What is 2+4?",
+          "options": [
+            "2",
+            "3",
+            "4",
+            "6"
+          ],
+          "correct_answer": "6"
         }
       ]
     },
@@ -50,11 +84,11 @@
       "duration": "30",
       "location_restriction": false,
       "tab_switching_restriction": false,
-      "custom_mode": false,
+      "custom_mode": true,
       "time_limits": {
-        "easy": 0,
-        "medium": 0,
-        "difficult": 0
+        "easy": 2,
+        "medium": 3,
+        "difficult": 4
       },
       "questions": [
         {
@@ -63,7 +97,9 @@
           "points": 3,
           "difficulty": "easy",
           "question": "Who are you?",
-          "options": [""]
+          "options": [
+            ""
+          ]
         }
       ]
     },
@@ -89,7 +125,13 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is H2O?",
-          "options": ["Water", "Oxygen", "Hydrogen", "Carbon"]
+          "options": [
+            "Water",
+            "Oxygen",
+            "Hydrogen",
+            "Carbon"
+          ],
+          "correct_answer": "Water"
         }
       ]
     }
@@ -119,7 +161,8 @@
       "studentId": "1",
       "score": 85,
       "dateTaken": "2024-01-15",
-      "timeTaken": "30 minutes"
+      "timeTaken": "30 minutes",
+      "flagged_questions": []
     },
     {
       "id": "2",
@@ -127,7 +170,8 @@
       "studentId": "2",
       "score": 90,
       "dateTaken": "2024-01-16",
-      "timeTaken": "25 minutes"
+      "timeTaken": "25 minutes",
+      "flagged_questions": []
     },
     {
       "id": "3",
@@ -135,12 +179,35 @@
       "studentId": "1",
       "score": 75,
       "dateTaken": "2024-01-17",
-      "timeTaken": "45 minutes"
+      "timeTaken": "45 minutes",
+      "flagged_questions": []
+    },
+    {
+      "id": "1723113409693",
+      "quizId": "1",
+      "studentId": "1",
+      "score": 66.66666666666666,
+      "dateTaken": "2024-08-08",
+      "timeTaken": "NaN minutes NaN seconds",
+      "flagged_questions": []
+    },
+    {
+      "id": "1723113409703",
+      "quizId": "1",
+      "studentId": "1",
+      "score": 66.66666666666666,
+      "dateTaken": "2024-08-08",
+      "timeTaken": "NaN minutes NaN seconds",
+      "flagged_questions": []
     }
   ],
   "settings": {
     "siteName": "QuizMaster",
     "adminEmail": "admin@quizmaster.com",
-    "userRoles": ["admin", "student", "guest"]
+    "userRoles": [
+      "admin",
+      "student",
+      "guest"
+    ]
   }
 }
