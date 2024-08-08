@@ -37,12 +37,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+2?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
+          "options": ["2", "3", "4", "5"],
           "correct_answer": "4"
         },
         {
@@ -51,12 +46,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+3?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
+          "options": ["2", "3", "4", "5"],
           "correct_answer": "5"
         },
         {
@@ -65,12 +55,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+4?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "6"
-          ],
+          "options": ["2", "3", "4", "6"],
           "correct_answer": "6"
         }
       ]
@@ -97,9 +82,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "Who are you?",
-          "options": [
-            ""
-          ]
+          "options": [""]
         }
       ]
     },
@@ -125,12 +108,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is H2O?",
-          "options": [
-            "Water",
-            "Oxygen",
-            "Hydrogen",
-            "Carbon"
-          ],
+          "options": ["Water", "Oxygen", "Hydrogen", "Carbon"],
           "correct_answer": "Water"
         }
       ]
@@ -183,34 +161,7 @@
       "flagged_questions": []
     },
     {
-      "id": "1723113409693",
-      "quizId": "1",
-      "studentId": "1",
-      "score": 66.66666666666666,
-      "dateTaken": "2024-08-08",
-      "timeTaken": "NaN minutes NaN seconds",
-      "flagged_questions": []
-    },
-    {
-      "id": "1723113409703",
-      "quizId": "1",
-      "studentId": "1",
-      "score": 66.66666666666666,
-      "dateTaken": "2024-08-08",
-      "timeTaken": "NaN minutes NaN seconds",
-      "flagged_questions": []
-    },
-    {
       "id": "1723114235630",
-      "quizId": "1",
-      "studentId": "1",
-      "score": 100,
-      "dateTaken": "2024-08-08",
-      "timeTaken": "0 minutes 0 seconds",
-      "flagged_questions": []
-    },
-    {
-      "id": "1723114235631",
       "quizId": "1",
       "studentId": "1",
       "score": 100,
@@ -222,10 +173,6 @@
   "settings": {
     "siteName": "QuizMaster",
     "adminEmail": "admin@quizmaster.com",
-    "userRoles": [
-      "admin",
-      "student",
-      "guest"
-    ]
+    "userRoles": ["admin", "student", "guest"]
   }
 }
