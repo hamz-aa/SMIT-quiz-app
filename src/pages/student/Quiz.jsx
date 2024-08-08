@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
   CircularProgress,
-  Button,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -12,9 +11,8 @@ import {
 } from "@mui/material";
 import QuizHeader from "../../components/quiz/QuizHeader";
 import QuestionCard from "../../components/quiz/QuestionCard";
-import QuizNavigation from "../../components/quiz/QuizNavigation";
+import QuizFooter from "../../components/quiz/QuizFooter";
 import QuizResult from "../../components/quiz/QuizResult";
-import FeedbackModal from "../../components/quiz/FeedbackModal";
 
 const QuizApp = () => {
   const [quiz, setQuiz] = useState(null);
@@ -27,13 +25,12 @@ const QuizApp = () => {
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [clicked, setClicked] = useState(false);
   const [flaggedQuestions, setFlaggedQuestions] = useState([]);
-  const [feedback, setFeedback] = useState("");
-  const [isFeedbackModalVisible, setIsFeedbackModalVisible] = useState(false);
   const [isQuizActive, setIsQuizActive] = useState(true);
   const [quizEnded, setQuizEnded] = useState(false);
   const [showSkippedQuestions, setShowSkippedQuestions] = useState(false);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
   const [tabSwitchAlertShown, setTabSwitchAlertShown] = useState(false);
+  const [totalTimeTaken, setTotalTimeTaken] = useState(0); // New state for total time taken
 
   const { quizId } = useParams();
   const navigate = useNavigate();
@@ -95,15 +92,15 @@ const QuizApp = () => {
 
   useEffect(() => {
     const handleVisibilityChange = () => {
-      // if (document.hidden) {
-      //   if (!tabSwitchAlertShown) {
-      //     alert("If you change the tab, your quiz will be cancelled.");
-      //     setTabSwitchAlertShown(true);
-      //   } else {
-      //     setIsQuizActive(false);
-      //     setQuizEnded(true);
-      //   }
-      // }
+      if (document.hidden) {
+        if (!tabSwitchAlertShown) {
+          alert("If you change the tab, your quiz will be cancelled.");
+          setTabSwitchAlertShown(true);
+        } else {
+          setIsQuizActive(false);
+          setQuizEnded(true);
+        }
+      }
     };
 
     document.addEventListener("visibilitychange", handleVisibilityChange);
@@ -148,12 +145,23 @@ const QuizApp = () => {
 
     setClicked(false);
     setSelectedOption(null);
+    setTotalTimeTaken(
+      (prev) =>
+        prev +
+        (quiz.custom_mode
+          ? quiz.time_limits[quiz.questions[currentQuestionIndex].difficulty] *
+              60 -
+            seconds
+          : totalSeconds - seconds)
+    );
   }, [
     selectedOption,
     quiz,
     currentQuestionIndex,
     skippedQuestions.length,
     showSkippedQuestions,
+    seconds,
+    totalSeconds,
   ]);
 
   const handleOptionSelect = useCallback((option) => {
@@ -187,19 +195,17 @@ const QuizApp = () => {
     });
   }, [currentQuestionIndex, quiz]);
 
-  const handleFeedbackChange = (e) => {
-    setFeedback(e.target.value);
-  };
-
-  const handleFeedbackSubmit = () => {
-    setIsFeedbackModalVisible(false);
-    console.log("Feedback submitted: ", feedback);
-  };
-
   const handleSubmitQuiz = () => {
-    const totalScore = correctAnswers * 5;
-    console.log("Quiz submitted. Total score:", totalScore);
     setShowResult(true);
+    setTotalTimeTaken(
+      (prev) =>
+        prev +
+        (quiz.custom_mode
+          ? quiz.time_limits[quiz.questions[currentQuestionIndex].difficulty] *
+              60 -
+            seconds
+          : totalSeconds - seconds)
+    );
   };
 
   if (quizEnded) {
@@ -222,49 +228,45 @@ const QuizApp = () => {
   }
 
   return (
-    <div className="flex flex-col items-center p-4">
+    <div className="flex flex-col items-center p-4 bg-[#efefef] rounded shadow w-full max-w-3xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">Quiz Application</h1>
       {isQuizActive ? (
-        <div className="flex flex-col items-center w-full max-w-2xl">
+        <>
           <QuizHeader
             currentQuestionIndex={currentQuestionIndex}
             totalQuestions={quiz.questions.length}
             seconds={seconds}
             totalSeconds={totalSeconds}
             customMode={quiz.custom_mode}
+            quizCompleted={showResult}
           />
           {!showResult ? (
-            <QuestionCard
-              question={quiz.questions[currentQuestionIndex]}
-              selectedOption={selectedOption}
-              handleOptionSelect={handleOptionSelect}
-            />
+            <>
+              <QuestionCard
+                question={quiz.questions[currentQuestionIndex]}
+                selectedOption={selectedOption}
+                handleOptionSelect={handleOptionSelect}
+              />
+              <QuizFooter
+                handleFlagQuestion={handleFlagQuestion}
+                handleNextQuestion={handleNextQuestion}
+                handleSkipQuestion={handleSkipQuestion}
+                clicked={clicked}
+              />
+            </>
           ) : (
             <QuizResult
               correctAnswers={correctAnswers}
               totalQuestions={quiz.questions.length}
-              setIsFeedbackModalVisible={setIsFeedbackModalVisible}
+              totalTimeTaken={totalTimeTaken}
             />
           )}
-          {!showResult && (
-            <QuizNavigation
-              handleFlagQuestion={handleFlagQuestion}
-              handleNextQuestion={handleNextQuestion}
-              handleSkipQuestion={handleSkipQuestion}
-              clicked={clicked}
-              showSkippedQuestions={showSkippedQuestions}
-            />
-          )}
-          <FeedbackModal
-            isFeedbackModalVisible={isFeedbackModalVisible}
-            handleFeedbackChange={handleFeedbackChange}
-            handleFeedbackSubmit={handleFeedbackSubmit}
-            feedback={feedback}
-          />
-        </div>
+        </>
       ) : (
-        <div className="text-red-500 font-bold">
-          The quiz is paused. Please return to the quiz tab.
+        <div className="text-center p-4">
+          <div className="text-red-500 font-bold">
+            The quiz is paused. Please return to the quiz tab.
+          </div>
         </div>
       )}
     </div>

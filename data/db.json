@@ -199,6 +199,24 @@
       "dateTaken": "2024-08-08",
       "timeTaken": "NaN minutes NaN seconds",
       "flagged_questions": []
+    },
+    {
+      "id": "1723114235630",
+      "quizId": "1",
+      "studentId": "1",
+      "score": 100,
+      "dateTaken": "2024-08-08",
+      "timeTaken": "0 minutes 0 seconds",
+      "flagged_questions": []
+    },
+    {
+      "id": "1723114235631",
+      "quizId": "1",
+      "studentId": "1",
+      "score": 100,
+      "dateTaken": "2024-08-08",
+      "timeTaken": "0 minutes 0 seconds",
+      "flagged_questions": []
     }
   ],
   "settings": {

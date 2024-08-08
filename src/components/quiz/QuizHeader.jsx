@@ -1,6 +1,5 @@
 import React from "react";
-import { Typography, LinearProgress, CircularProgress } from "@mui/material";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Typography } from "@mui/material";
 
 const QuizHeader = ({
   currentQuestionIndex,
@@ -8,29 +7,28 @@ const QuizHeader = ({
   seconds,
   totalSeconds,
   customMode,
-}) => (
-  <div className="flex justify-between items-center w-full mb-4">
-    <Typography variant="h6">
-      Question {currentQuestionIndex + 1} / {totalQuestions}
-    </Typography>
-    <div className="flex items-center">
-      <AccessTimeIcon />
-      <Typography variant="body1">
-        {customMode
-          ? `${seconds} seconds`
-          : `${Math.floor(totalSeconds / 60)}:${totalSeconds % 60} minutes`}
+  quizCompleted,
+}) => {
+  return (
+    <div className="flex justify-between items-center w-full mb-4 p-4 bg-white rounded shadow">
+      <Typography variant="h6">
+        Question {currentQuestionIndex + 1} of {totalQuestions}
       </Typography>
+      {!quizCompleted && (
+        <Typography variant="h6">
+          Time Left: {Math.floor(seconds / 60)}:{seconds % 60 < 10 ? "0" : ""}
+          {seconds % 60}
+        </Typography>
+      )}
+      {customMode && !quizCompleted && (
+        <Typography variant="h6">
+          Total Time: {Math.floor(totalSeconds / 60)}:
+          {totalSeconds % 60 < 10 ? "0" : ""}
+          {totalSeconds % 60}
+        </Typography>
+      )}
     </div>
-    <CircularProgress
-      variant="determinate"
-      value={
-        customMode
-          ? (seconds / (totalSeconds / totalQuestions)) * 100
-          : (totalSeconds / (totalSeconds / totalQuestions)) * 100
-      }
-      className="w-full mt-2"
-    />
-  </div>
-);
+  );
+};
 
 export default QuizHeader;

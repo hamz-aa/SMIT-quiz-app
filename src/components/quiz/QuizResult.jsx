@@ -37,7 +37,7 @@ const QuizResult = ({ correctAnswers, totalQuestions, totalTimeTaken }) => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-4">
-      <Card className="w-full max-w-2xl p-4 mb-4">
+      <Card className="w-full max-w-2xl p-4 mb-4 bg-white rounded shadow">
         <CardContent className="flex flex-col items-center">
           <Typography variant="h4" className="font-bold mb-4">
             Quiz Result
