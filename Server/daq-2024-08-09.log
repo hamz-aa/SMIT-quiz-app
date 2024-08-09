@@ -1,1 +1,76 @@
 2024-08-09 10:07:48.401 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:24:11.238 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:31:23.068 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:34:08.832 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:34:51.854 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:36:13.938 [info]: 	token is not valid Error: No auth token 
+2024-08-09 10:36:45.111 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:36:46.005 [error]: 	Internal server error create {
+  "body": {}
+}
+2024-08-09 10:37:54.305 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:37:56.539 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:38:02.234 [error]: 	Internal server error create {
+  "body": {
+    "errorResponse": {
+      "index": 0,
+      "code": 11000,
+      "errmsg": "E11000 duplicate key error collection: test.students index: email_1 dup key: { email: \"hamza@mail.com\" }",
+      "keyPattern": {
+        "email": 1
+      },
+      "keyValue": {
+        "email": "hamza@mail.com"
+      }
+    },
+    "index": 0,
+    "code": 11000,
+    "keyPattern": {
+      "email": 1
+    },
+    "keyValue": {
+      "email": "hamza@mail.com"
+    }
+  }
+}
+2024-08-09 10:38:38.957 [error]: 	Internal server error create {
+  "body": {}
+}
+2024-08-09 10:41:09.754 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:42:54.097 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:43:06.333 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:43:26.175 [info]: 	Student saved successfully hamza@mail.com 
+2024-08-09 10:43:57.027 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:45:17.753 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:45:45.732 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:46:24.307 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:48:40.337 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:48:54.728 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:49:13.338 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:49:28.566 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:49:41.823 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:51:14.018 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:51:15.887 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:51:35.043 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:54:39.163 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:55:17.120 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:55:23.048 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:55:55.139 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:55:56.744 [error]: 	Internal server error create {
+  "body": {}
+}
+2024-08-09 10:57:01.254 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:57:04.404 [info]: 	Student saved successfully hamza@mail.com 
+2024-08-09 10:59:01.693 [debug]: 	Logging initialized at debug level 
+2024-08-09 10:59:28.262 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:03:13.116 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:03:51.462 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:04:59.387 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:06:05.155 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:06:27.077 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:08:36.338 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:09:17.625 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:09:32.678 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:09:39.933 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:10:31.919 [debug]: 	Logging initialized at debug level 
+2024-08-09 11:10:52.847 [debug]: 	Logging initialized at debug level 

@@ -1,31 +1,38 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const studentSchema = new mongoose.Schema({
+const studentSchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     email: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
     },
     course: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     batch: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     instructor: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
-}, {
+  },
+  {
     timestamps: true,
-});
+  }
+);
 
-const StudentModel = mongoose.model('Student', studentSchema);
+const StudentModel = mongoose.model("Student", studentSchema);
 
 export { StudentModel };
