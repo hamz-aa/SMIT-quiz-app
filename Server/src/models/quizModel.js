@@ -1,47 +1,61 @@
 import mongoose from "mongoose";
 
-
-
-const QuizSchema = new mongoose.Schema({
+const QuizSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        require: true
+      type: String,
+      required: true,
     },
     description: {
-        type: String,
-        require: true
+      type: String,
+      required: true,
     },
     course: {
-        type: String,
-        require: true
+      type: String,
+      required: true,
     },
     deadline: {
-        type: String,
-        require: true
+      type: Date, // Using Date type for better time manipulation
+      required: true,
     },
     duration: {
-        type: String,
-        require: true
+      type: Number, // Assuming duration is in minutes
+      required: true,
     },
     locationRestriction: {
-        type: Boolean,
-        require: true
+      type: Boolean,
+      required: true,
     },
     tabSwitchingRestriction: {
-        type: Boolean,
-        require: true
+      type: Boolean,
+      required: true,
     },
     customMode: {
-        type: Boolean,
-        require: true
+      type: Boolean,
+      required: true,
     },
     timeLimits: {
-        type: String,
-        enum: ["easy", "medium", "difficult"],
-        require: true
+      easy: {
+        type: Number,
+        required: function () {
+          return this.customMode;
+        }, // Required if customMode is true
+      },
+      medium: {
+        type: Number,
+        required: function () {
+          return this.customMode;
+        }, // Required if customMode is true
+      },
+      difficult: {
+        type: Number,
+        required: function () {
+          return this.customMode;
+        }, // Required if customMode is true
+      },
     },
-},
-    { timestamps: true }
-)
+  },
+  { timestamps: true }
+);
 
-export const QuizModel = mongoose.model("Quiz", QuizSchema)
+export const QuizModel = mongoose.model("Quiz", QuizSchema);

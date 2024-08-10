@@ -5,6 +5,7 @@ import AdditionalSettings from "../../components/quiz/AdditionalSettings";
 import AddQuestions from "../../components/quiz/AddQuestions";
 import SecondaryButton from "../../components/common/SecondaryButton";
 import PrimaryButton from "../../components/common/PrimaryButton";
+import { baseUrl } from "../../constants/constants"; // Import baseUrl
 
 const CreateQuiz = () => {
   const [quiz, setQuiz] = useState({
@@ -13,19 +14,19 @@ const CreateQuiz = () => {
     course: "",
     deadline: "",
     duration: "",
-    location_restriction: false,
-    tab_switching_restriction: false,
-    custom_mode: false,
-    time_limits: {
+    locationRestriction: false, // Updated to camelCase
+    tabSwitchingRestriction: false, // Updated to camelCase
+    customMode: false, // Updated to camelCase
+    timeLimits: {
       easy: 0,
       medium: 0,
       difficult: 0,
     },
-    questions: [],
   });
 
   const [isAddingQuestions, setIsAddingQuestions] = useState(false);
   const [error, setError] = useState("");
+  const [quizId, setQuizId] = useState(null); // Store the quiz ID after creation
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,35 +40,18 @@ const CreateQuiz = () => {
 
   const handleTimeLimitChange = (e) => {
     const { name, value } = e.target;
-    setQuiz({ ...quiz, time_limits: { ...quiz.time_limits, [name]: value } });
+    setQuiz({ ...quiz, timeLimits: { ...quiz.timeLimits, [name]: value } });
   };
 
-  const handleCreateQuiz = (updatedQuiz) => {
-    axios
-      .post("http://localhost:5000/quizzes", updatedQuiz)
-      .then(() => {
-        setQuiz({
-          title: "",
-          description: "",
-          course: "",
-          deadline: "",
-          duration: "",
-          location_restriction: false,
-          tab_switching_restriction: false,
-          custom_mode: false,
-          time_limits: {
-            easy: 0,
-            medium: 0,
-            difficult: 0,
-          },
-          questions: [],
-        });
-        alert("Quiz created successfully!");
-        setIsAddingQuestions(false);
-      })
-      .catch((error) => {
-        console.error("There was an error creating the quiz!", error);
-      });
+  const handleCreateQuiz = async () => {
+    try {
+      const response = await axios.post(`${baseUrl}/api/quiz/create`, quiz);
+      setQuizId(response.data.data._id); // Assuming the API returns the created quiz ID
+      setIsAddingQuestions(true);
+    } catch (error) {
+      console.error("There was an error creating the quiz!", error);
+      setError("An error occurred while creating the quiz. Please try again.");
+    }
   };
 
   const handleCancel = () => {
@@ -77,15 +61,14 @@ const CreateQuiz = () => {
       course: "",
       deadline: "",
       duration: "",
-      location_restriction: false,
-      tab_switching_restriction: false,
-      custom_mode: false,
-      time_limits: {
+      locationRestriction: false,
+      tabSwitchingRestriction: false,
+      customMode: false,
+      timeLimits: {
         easy: 0,
         medium: 0,
         difficult: 0,
       },
-      questions: [],
     });
     setIsAddingQuestions(false);
   };
@@ -102,15 +85,16 @@ const CreateQuiz = () => {
       return;
     }
     setError("");
-    setIsAddingQuestions(true);
+    handleCreateQuiz(); // Call the API before proceeding
+    console.log(quiz);
   };
 
-  if (isAddingQuestions) {
+  if (isAddingQuestions && quizId) {
     return (
       <AddQuestions
+        quizId={quizId} // Pass the created quiz ID to AddQuestions component
         quiz={quiz}
         setQuiz={setQuiz}
-        handleCreateQuiz={handleCreateQuiz}
         handleCancel={handleCancel}
       />
     );

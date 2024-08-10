@@ -61,8 +61,6 @@ const Sidebar = ({
   ];
 
   const checkActive = (to) => {
-    console.log(location.pathname, " loc");
-    console.log(to, " to");
     return location.pathname === to;
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   TextField,
   Button,
@@ -10,30 +10,45 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/smit-logo.png";
 import graduateImg from "../../assets/HandsGraduate.svg";
+import { baseUrl } from "../../constants/constants";
+import { UserContext } from "../../contexts/UserContext"; // Import UserContext
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { setUser, setIsLoggedIn, setIsAdmin } = useContext(UserContext); // Get context functions
 
   const handleLogin = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/students");
-      const students = response.data;
-
-      const student = students.find(
-        (stu) => stu.username === username && stu.password === password
-      );
-
-      if (student) {
-        alert("Login successful!");
-        navigate("/quiz-cards"); // Navigate to the quiz page or wherever appropriate
+      if (email === "admin@mail.com" && password === "admin") {
+        setIsAdmin(true);
+        setIsLoggedIn(true);
+        localStorage.setItem("isAdmin", "true");
+        localStorage.setItem("isLoggedIn", "true");
+        navigate("/admin");
       } else {
-        setError("Invalid username or password");
+        const response = await axios.post(`${baseUrl}/api/auth/login`, {
+          email,
+          password,
+        });
+
+        if (response.status === 200) {
+          const student = response.data.student;
+          setUser(student);
+          setIsLoggedIn(true);
+          setIsAdmin(false);
+          localStorage.setItem("user", JSON.stringify(student));
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("isAdmin", "false");
+          navigate("/student/quizzes");
+        } else {
+          setError("Invalid email or password");
+        }
       }
     } catch (err) {
-      console.error("Error fetching students:", err);
+      console.error("Login error:", err);
       setError("An error occurred. Please try again later.");
     }
   };
@@ -49,7 +64,7 @@ const Login = () => {
         <div className="lg:w-1/2 px-4 lg:px-6 flex flex-col justify-center items-center overflow-hidden">
           <header className="flex flex-col items-center w-full p-4">
             <span className="text-xl font-bold text-blue-600">
-              <img className="w-32" src={logo} alt="" />
+              <img className="w-32" src={logo} alt="SMIT Logo" />
             </span>
             <Typography
               variant="h6"
@@ -59,13 +74,13 @@ const Login = () => {
             </Typography>
           </header>
 
-          <form onSubmit={handleSubmit} className="mt-8">
+          <form onSubmit={handleSubmit} className="mt-8 w-full max-w-md">
             <div className="mb-4">
               <TextField
                 fullWidth
-                label="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                label="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>

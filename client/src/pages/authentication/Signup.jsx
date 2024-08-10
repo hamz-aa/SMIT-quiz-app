@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   TextField,
   Button,
@@ -12,13 +12,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/smit-logo.png";
 import graduateImg from "../../assets/HandsGraduate.svg";
+import { baseUrl } from "../../constants/constants";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [course, setCourse] = useState("");
-  const [batch, setBatch] = useState(new Date().getFullYear());
+  const [batch] = useState(new Date().getFullYear()); // Keeping the batch fixed to the current year
   const [instructor, setInstructor] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -30,8 +31,7 @@ const Signup = () => {
     }
 
     const newStudent = {
-      id: Date.now().toString(),
-      username,
+      name: username,
       email,
       password,
       course,
@@ -40,20 +40,16 @@ const Signup = () => {
     };
 
     try {
-      const response = await axios.get("http://localhost:5000/students");
-      const students = response.data;
+      const response = await axios.post(
+        `${baseUrl}/api/auth/signup`,
+        newStudent
+      );
 
-      if (
-        students.find(
-          (student) => student.username === username || student.email === email
-        )
-      ) {
-        setError("Username or email already exists");
-        return;
+      if (response.data.success) {
+        navigate("/login");
+      } else {
+        setError(response.data.message || "Signup failed. Please try again.");
       }
-
-      await axios.post("http://localhost:5000/students", newStudent);
-      navigate("/login");
     } catch (error) {
       console.error("There was an error signing up!", error);
       setError("An error occurred. Please try again.");
@@ -62,11 +58,11 @@ const Signup = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-white">
-      <main className="flex flex-col lg:flex-row items-center justify-center flex-1 w-full p-4 lg:p-10 max-w-screen-xl h-screen">
+      <main className="flex flex-col lg:flex-row items-center justify-center flex-1 w-full p-4 lg:p-10 max-w-screen-xl">
         <div className="lg:w-1/2 px-4 lg:px-6 flex flex-col justify-center items-center overflow-hidden">
           <header className="flex flex-col items-center w-full p-4">
             <span className="text-xl font-bold text-blue-600">
-              <img className="w-32" src={logo} alt="" />
+              <img className="w-32" src={logo} alt="SMIT Logo" />
             </span>
             <Typography
               variant="h4"
@@ -122,7 +118,6 @@ const Signup = () => {
               variant="outlined"
               fullWidth
               value={batch}
-              onChange={(e) => setBatch(e.target.value)}
               margin="normal"
               required
               disabled

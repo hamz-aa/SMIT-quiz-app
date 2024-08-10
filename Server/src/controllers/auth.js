@@ -100,7 +100,7 @@ export const login = async (req, res, next) => {
     const student = await StudentModel.findOne({ email });
     const isCorrect = student.password === password;
     if (isCorrect) {
-      res.status(200).json("Login successful!");
+      res.status(200).json(student);
     } else {
       res.status(403).json("Wrong credentials!");
     }

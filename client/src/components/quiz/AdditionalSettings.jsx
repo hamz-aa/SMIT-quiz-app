@@ -9,9 +9,9 @@ const AdditionalSettings = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={quiz.location_restriction}
+          checked={quiz.locationRestriction}
           onChange={handleCheckboxChange}
-          name="location_restriction"
+          name="locationRestriction"
         />
       }
       label="Location Restriction"
@@ -19,9 +19,9 @@ const AdditionalSettings = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={quiz.tab_switching_restriction}
+          checked={quiz.tabSwitchingRestriction}
           onChange={handleCheckboxChange}
-          name="tab_switching_restriction"
+          name="tabSwitchingRestriction"
         />
       }
       label="Tab Switching Restriction"
@@ -29,20 +29,20 @@ const AdditionalSettings = ({
     <FormControlLabel
       control={
         <Checkbox
-          checked={quiz.custom_mode}
+          checked={quiz.customMode}
           onChange={handleCheckboxChange}
-          name="custom_mode"
+          name="customMode"
         />
       }
       label="Custom Mode"
     />
-    {quiz.custom_mode && (
+    {quiz.customMode && (
       <div className="flex flex-col space-y-4">
         <TextField
           label="Easy Time Limit (minutes)"
           name="easy"
           type="number"
-          value={quiz.time_limits.easy}
+          value={quiz.timeLimits.easy}
           onChange={handleTimeLimitChange}
           fullWidth
           margin="normal"
@@ -51,7 +51,7 @@ const AdditionalSettings = ({
           label="Medium Time Limit (minutes)"
           name="medium"
           type="number"
-          value={quiz.time_limits.medium}
+          value={quiz.timeLimits.medium}
           onChange={handleTimeLimitChange}
           fullWidth
           margin="normal"
@@ -60,7 +60,7 @@ const AdditionalSettings = ({
           label="Difficult Time Limit (minutes)"
           name="difficult"
           type="number"
-          value={quiz.time_limits.difficult}
+          value={quiz.timeLimits.difficult}
           onChange={handleTimeLimitChange}
           fullWidth
           margin="normal"

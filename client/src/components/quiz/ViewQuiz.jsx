@@ -1,107 +1,112 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import SecondaryButton from "../../components/common/SecondaryButton";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const ViewQuiz = ({ quiz, handleCancel, quizId }) => {
-  const [quizData, setQuizData] = useState(quiz || null);
-
-  useEffect(() => {
-    if (!quiz && quizId) {
-      axios
-        .get(`http://localhost:5000/quizzes/${quizId}`)
-        .then((response) => {
-          setQuizData(response.data);
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the quiz!", error);
-        });
-    }
-  }, [quiz, quizId]);
-
-  if (!quizData) {
-    return <p>Loading...</p>;
-  }
+const ViewQuiz = ({ quizId, quiz, handleCancel, questions }) => {
+  const navigate = useNavigate();
 
   return (
     <div className="flex-1 p-4 bg-gray-100">
       <div className="bg-white shadow rounded p-6 mb-4">
-        <h2 className="text-2xl font-bold mb-4">Quiz Overview</h2>
-        <p>
-          <strong>Title:</strong> {quizData.title}
-        </p>
-        <p>
-          <strong>Description:</strong> {quizData.description}
-        </p>
-        <p>
-          <strong>Course:</strong> {quizData.course}
-        </p>
-        <p>
-          <strong>Deadline:</strong> {quizData.deadline}
-        </p>
-        <p>
-          <strong>Duration:</strong> {quizData.duration} minutes
-        </p>
-        <p>
-          <strong>Location Restriction:</strong>{" "}
-          {quizData.location_restriction ? "Yes" : "No"}
-        </p>
-        <p>
-          <strong>Tab Switching Restriction:</strong>{" "}
-          {quizData.tab_switching_restriction ? "Yes" : "No"}
-        </p>
-        <p>
-          <strong>Custom Mode:</strong> {quizData.custom_mode ? "Yes" : "No"}
-        </p>
-        {quizData.custom_mode && (
-          <div>
-            <p>
-              <strong>Easy Time Limit:</strong> {quizData.time_limits.easy}{" "}
-              minutes
+        <h2 className="text-3xl font-bold mb-6 text-primary">Quiz Overview</h2>
+        <div className="mb-4">
+          <p className="mb-2">
+            <strong className="text-secondary">Title:</strong> {quiz.title}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Description:</strong>{" "}
+            {quiz.description}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Course:</strong> {quiz.course}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Deadline:</strong>{" "}
+            {quiz.deadline}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Duration:</strong>{" "}
+            {quiz.duration} minutes
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Location Restriction:</strong>{" "}
+            {quiz.locationRestriction ? "Yes" : "No"}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">
+              Tab Switching Restriction:
+            </strong>{" "}
+            {quiz.tabSwitchingRestriction ? "Yes" : "No"}
+          </p>
+          <p className="mb-2">
+            <strong className="text-secondary">Custom Mode:</strong>{" "}
+            {quiz.customMode ? "Yes" : "No"}
+          </p>
+          {quiz.customMode && (
+            <div className="mb-4">
+              <p className="mb-2">
+                <strong className="text-secondary">Easy Time Limit:</strong>{" "}
+                {quiz.timeLimits.easy} minutes
+              </p>
+              <p className="mb-2">
+                <strong className="text-secondary">Medium Time Limit:</strong>{" "}
+                {quiz.timeLimits.medium} minutes
+              </p>
+              <p className="mb-2">
+                <strong className="text-secondary">
+                  Difficult Time Limit:
+                </strong>{" "}
+                {quiz.timeLimits.difficult} minutes
+              </p>
+            </div>
+          )}
+        </div>
+
+        <h3 className="text-2xl font-bold mt-6 mb-4 text-primary">Questions</h3>
+        {questions.map((question, qIndex) => (
+          <div
+            key={qIndex}
+            className="bg-gray-50 shadow rounded p-4 mb-4 border border-gray-400"
+          >
+            <p className="mb-2">
+              <strong className="text-secondary">
+                Question {question.id}:
+              </strong>{" "}
+              {question.question}
             </p>
-            <p>
-              <strong>Medium Time Limit:</strong> {quizData.time_limits.medium}{" "}
-              minutes
+            <p className="mb-2">
+              <strong className="text-secondary">Type:</strong> {question.type}
             </p>
-            <p>
-              <strong>Difficult Time Limit:</strong>{" "}
-              {quizData.time_limits.difficult} minutes
+            <p className="mb-2">
+              <strong className="text-secondary">Points:</strong>{" "}
+              {question.points}
             </p>
-          </div>
-        )}
-        <h3 className="text-xl font-bold mt-6 mb-4">Questions</h3>
-        {quizData.questions.map((question, qIndex) => (
-          <div key={qIndex} className="bg-gray-50 shadow rounded p-4 mb-4">
-            <p>
-              <strong>Question {question.id}:</strong> {question.question}
-            </p>
-            <p>
-              <strong>Type:</strong> {question.type}
-            </p>
-            <p>
-              <strong>Points:</strong> {question.points}
-            </p>
-            {quizData.custom_mode && (
-              <p>
-                <strong>Difficulty:</strong> {question.difficulty}
+            {quiz.customMode && (
+              <p className="mb-2">
+                <strong className="text-secondary">Difficulty:</strong>{" "}
+                {question.difficulty}
               </p>
             )}
-            <p>
-              <strong>Options:</strong>
+            <p className="mb-2">
+              <strong className="text-secondary">Options:</strong>
             </p>
-            <ul>
+            <ul className="list-disc ml-6">
               {question.options.map((option, oIndex) => (
-                <li key={oIndex}>{option}</li>
+                <li key={oIndex} className="mb-1">
+                  {option}
+                </li>
               ))}
             </ul>
           </div>
         ))}
       </div>
-      <div className="flex justify-end space-x-4 fixed bottom-4 right-4">
+
+      <div className="flex justify-end space-x-4">
         <PrimaryButton text="Done" onClick={handleCancel} />
         <SecondaryButton
           text="Edit Quiz"
-          onClick={() => alert("Redirect to edit quiz page")}
+          onClick={() => navigate(`/admin/edit-quiz/${quizId}`)}
         />
       </div>
     </div>
