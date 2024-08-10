@@ -5,6 +5,7 @@ import {
   getQuizQuestion,
   updateQuestion,
   deleteQuestion,
+  getQuestionForQuiz,
 } from "../controllers/question.controller.js";
 import { jwtAuth } from "../middlewares/jwt.middleware.js";
 import { authorizeRole } from "../middlewares/identification.js";
@@ -13,6 +14,8 @@ const questionRouter = Router();
 const studentQuestionRouter = Router();
 
 questionRouter.post("/create", createQuestion);
+
+questionRouter.get("/get/:quizId", getQuestionForQuiz);
 
 questionRouter.get("/", jwtAuth, authorizeRole("superAdmin"), getQuestion);
 questionRouter.get(

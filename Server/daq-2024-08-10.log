@@ -1,0 +1,55 @@
+2024-08-10 05:56:29.526 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:01:20.805 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:01:31.259 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:02:51.567 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:04:43.611 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:06:13.948 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:07:29.027 [error]: 	Internal server error {
+  "body": {
+    "stringValue": "\"i\"",
+    "valueType": "string",
+    "kind": "number",
+    "value": "i",
+    "path": "duration",
+    "reason": null,
+    "name": "CastError",
+    "message": "Cast to number failed for value \"i\" (type string) at path \"duration\" for model \"Quiz\""
+  }
+}
+2024-08-10 06:08:40.130 [error]: 	Internal server error {
+  "body": {
+    "stringValue": "\"i\"",
+    "valueType": "string",
+    "kind": "number",
+    "value": "i",
+    "path": "duration",
+    "reason": null,
+    "name": "CastError",
+    "message": "Cast to number failed for value \"i\" (type string) at path \"duration\" for model \"Quiz\""
+  }
+}
+2024-08-10 06:10:54.717 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:12:06.309 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:12:26.491 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:13:31.010 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:15:30.069 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:17:11.940 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:17:20.669 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:17:34.549 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:18:00.435 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:18:01.411 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:28:28.223 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:35:02.593 [error]: 	Internal server error {
+  "body": {
+    "stringValue": "\"undefined\"",
+    "valueType": "string",
+    "kind": "ObjectId",
+    "value": "undefined",
+    "path": "_id",
+    "reason": {},
+    "name": "CastError",
+    "message": "Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"Quiz\""
+  }
+}
+2024-08-10 06:42:17.947 [debug]: 	Logging initialized at debug level 
+2024-08-10 06:43:15.297 [debug]: 	Logging initialized at debug level 

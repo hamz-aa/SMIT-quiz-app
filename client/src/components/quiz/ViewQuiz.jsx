@@ -1,10 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import SecondaryButton from "../../components/common/SecondaryButton";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseUrl } from "../../constants/constants"; // Assuming baseUrl is defined in constants
 
-const ViewQuiz = ({ quizId, quiz, handleCancel, questions }) => {
+const ViewQuiz = ({ quizId, quiz, handleCancel, questions: propQuestions }) => {
+  const [questions, setQuestions] = useState(propQuestions || []);
+  const [loading, setLoading] = useState(!propQuestions);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!propQuestions) {
+      axios
+        .get(`${baseUrl}/api/question/get/${quizId}`)
+        .then((response) => {
+          setQuestions(response.data.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the questions!", error);
+          setLoading(false);
+        });
+    }
+  }, [quizId, propQuestions]);
+
+  if (loading) {
+    return <p>Loading questions...</p>;
+  }
 
   return (
     <div className="flex-1 p-4 bg-gray-100">
@@ -70,9 +93,7 @@ const ViewQuiz = ({ quizId, quiz, handleCancel, questions }) => {
             className="bg-gray-50 shadow rounded p-4 mb-4 border border-gray-400"
           >
             <p className="mb-2">
-              <strong className="text-secondary">
-                Question {question.id}:
-              </strong>{" "}
+              <strong className="text-secondary">Question {qIndex + 1}:</strong>{" "}
               {question.question}
             </p>
             <p className="mb-2">

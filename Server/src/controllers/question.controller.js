@@ -3,6 +3,7 @@ import { questionService } from "../service/question.service.js";
 const {
   createQuestionService,
   getQuestionService,
+  getQuestionForQuizService,
   getQuizQuestionService,
   updateQuestionService,
   deleteQuestionService,
@@ -23,6 +24,19 @@ export async function createQuestion(req, res) {
   }
 }
 
+export async function getQuestionForQuiz(req, res) {
+  try {
+    const result = await getQuestionForQuizService(req);
+    if (result?.status) {
+      res.status(200).json(result);
+    } else {
+      return res.status(403).json(result);
+    }
+  } catch (error) {
+    logger.error("Internal server error get", { body: error });
+    res.status(500).json({ message: "internal server error", error: error });
+  }
+}
 export async function getQuestion(req, res) {
   try {
     const result = await getQuestionService(req);

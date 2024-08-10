@@ -16,6 +16,16 @@ class questionService {
     }
   };
 
+  getQuestionForQuizService = async (req) => {
+    const questions = await QuestionModel.find({ quizId: req.params.quizId });
+
+    if (questions) {
+      return sendMessage(true, "Questions found successfully", questions);
+    } else {
+      return sendMessage(false, "Question not found", questions);
+    }
+  };
+
   getQuestionService = async (req) => {
     const {
       limit = 10,

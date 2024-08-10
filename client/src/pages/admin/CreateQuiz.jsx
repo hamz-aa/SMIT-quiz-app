@@ -86,7 +86,6 @@ const CreateQuiz = () => {
     }
     setError("");
     handleCreateQuiz(); // Call the API before proceeding
-    console.log(quiz);
   };
 
   if (isAddingQuestions && quizId) {

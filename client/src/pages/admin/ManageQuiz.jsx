@@ -4,6 +4,7 @@ import { TextField, Select, MenuItem } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import QuizTable from "../../components/common/QuizTable";
 import ViewQuiz from "../../components/quiz/ViewQuiz";
+import { baseUrl } from "../../constants/constants";
 
 const ManageQuiz = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -11,14 +12,15 @@ const ManageQuiz = () => {
   const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("");
   const [selectedQuizId, setSelectedQuizId] = useState(null);
+  const [selectedQuiz, setSelectedQuiz] = useState(null); // To pass the selected quiz data
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/quizzes")
+      .get(`${baseUrl}/api/quiz/all`)
       .then((response) => {
-        setQuizzes(response.data);
-        setFilteredQuizzes(response.data);
+        setQuizzes(response.data.data);
+        setFilteredQuizzes(response.data.data);
       })
       .catch((error) => {
         console.error("There was an error fetching the quizzes!", error);
@@ -60,9 +62,9 @@ const ManageQuiz = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://localhost:5000/quizzes/${id}`)
+      .delete(`${baseUrl}/api/quiz/remove/${id}`)
       .then(() => {
-        const updatedQuizzes = quizzes.filter((quiz) => quiz.id !== id);
+        const updatedQuizzes = quizzes.filter((quiz) => quiz._id !== id);
         setQuizzes(updatedQuizzes);
         setFilteredQuizzes(updatedQuizzes);
       })
@@ -72,19 +74,28 @@ const ManageQuiz = () => {
   };
 
   const handleEdit = (id) => {
-    navigate(`/edit-quiz/${id}`);
+    navigate(`/admin/edit-quiz/${id}`);
   };
 
   const handleView = (id) => {
+    const quiz = quizzes.find((quiz) => quiz._id === id);
     setSelectedQuizId(id);
+    setSelectedQuiz(quiz); // Store the selected quiz data
   };
 
   const handleCancelView = () => {
     setSelectedQuizId(null);
+    setSelectedQuiz(null); // Reset selected quiz data
   };
 
   if (selectedQuizId) {
-    return <ViewQuiz quizId={selectedQuizId} handleCancel={handleCancelView} />;
+    return (
+      <ViewQuiz
+        quizId={selectedQuizId}
+        quiz={selectedQuiz}
+        handleCancel={handleCancelView}
+      />
+    );
   }
 
   return (

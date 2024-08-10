@@ -37,9 +37,9 @@ const QuizTable = ({ quizzes, onEdit, onDelete, onView }) => {
         <TableBody>
           {quizzes.map((quiz) => (
             <TableRow
-              key={quiz.id}
+              key={quiz._id}
               hover
-              onClick={() => onView(quiz.id)}
+              onClick={() => onView(quiz._id)}
               style={{ cursor: "pointer" }}
             >
               <TableCell>{quiz.title}</TableCell>
@@ -50,13 +50,13 @@ const QuizTable = ({ quizzes, onEdit, onDelete, onView }) => {
               </TableCell>
               <TableCell onClick={(e) => e.stopPropagation()}>
                 <IconButton
-                  onClick={() => onEdit(quiz.id)}
+                  onClick={() => onEdit(quiz._id)}
                   style={{ color: "yellow" }}
                 >
                   <Edit />
                 </IconButton>
                 <IconButton
-                  onClick={() => onDelete(quiz.id)}
+                  onClick={() => onDelete(quiz._id)}
                   style={{ color: "red" }}
                 >
                   <Delete />
