@@ -11,6 +11,7 @@ import { authorizeRole } from "../middlewares/identification.js";
 
 const studentRouter = Router();
 
+// not required
 studentRouter.post("/", jwtAuth, authorizeRole("superAdmin"), createStudent);
 studentRouter.get("/", jwtAuth, authorizeRole("superAdmin"), getStudents);
 studentRouter.get(

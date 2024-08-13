@@ -1,4 +1,4 @@
-import e from "express";
+import express from "express";
 import {
   createQuiz,
   deleteQuiz,
@@ -8,7 +8,8 @@ import {
 } from "../controllers/quiz.controller.js";
 import { jwtAuth } from "../middlewares/jwt.middleware.js";
 import { authorizeRole } from "../middlewares/identification.js";
-const quizRouter = e.Router();
+
+const quizRouter = express.Router();
 
 quizRouter.post("/create", createQuiz);
 quizRouter.put("/update/:quizId", updateQuiz);

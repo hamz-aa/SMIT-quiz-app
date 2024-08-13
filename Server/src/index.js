@@ -1,5 +1,6 @@
 //  mongoDB connection
 import "./config/database.mongodb.js";
+
 import express from "express";
 import { quizRouter } from "./routes/quiz.router.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -53,16 +54,16 @@ app.use(
 app.use(passport.session());
 app.use(passport.initialize());
 
+// required
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", roleTableRoutes);
 app.use("/api/quiz", quizRouter);
 app.use("/api/question", questionRouter);
-
 app.use("/api/reports", quizReportRouter);
-
-app.use("/api/student", studentQuestionRouter);
-
 app.use("/api/student", studentRouter);
+
+// not required
+app.use("/api/admin", roleTableRoutes);
+app.use("/api/student", studentQuestionRouter);
 
 app.listen(PORT, () => {
   console.log("server is running on PORT " + PORT);

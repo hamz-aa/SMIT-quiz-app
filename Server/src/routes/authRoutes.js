@@ -19,10 +19,13 @@ import { authorizeRole } from "../middlewares/identification.js";
 
 const authRoutes = express.Router();
 
-authRoutes.post("/verifyemail", validateRequest(emailValidate), emailVerify);
-authRoutes.post("/verifyotp", verifyOTP);
+// required
 authRoutes.post("/signup", signup);
 authRoutes.post("/login", login);
+
+// not required
+authRoutes.post("/verifyemail", validateRequest(emailValidate), emailVerify);
+authRoutes.post("/verifyotp", verifyOTP);
 authRoutes.post("/forgot/password", forgotPassword);
 authRoutes.post("/reset/password", resetPassword);
 authRoutes.put("/change/password", jwtAuth, changePassword);

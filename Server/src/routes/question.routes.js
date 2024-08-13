@@ -13,12 +13,12 @@ import { authorizeRole } from "../middlewares/identification.js";
 const questionRouter = Router();
 const studentQuestionRouter = Router();
 
+// required
 questionRouter.post("/create", createQuestion);
-
 questionRouter.get("/get/:quizId", getQuestionForQuiz);
-
 questionRouter.put("/update/:questionId", updateQuestion);
 
+// not required
 questionRouter.get("/", jwtAuth, authorizeRole("superAdmin"), getQuestion);
 questionRouter.get(
   "quiz/:quizId",
