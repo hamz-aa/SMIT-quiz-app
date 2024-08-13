@@ -17,6 +17,7 @@ import questionRouter, {
   studentQuestionRouter,
 } from "./routes/question.routes.js";
 import studentRouter from "./routes/student.routes.js";
+import quizReportRouter from "./routes/quizReportRoute.js";
 
 const PORT = environments.PORT;
 
@@ -56,6 +57,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin", roleTableRoutes);
 app.use("/api/quiz", quizRouter);
 app.use("/api/question", questionRouter);
+
+app.use("/api/reports", quizReportRouter);
 
 app.use("/api/student", studentQuestionRouter);
 

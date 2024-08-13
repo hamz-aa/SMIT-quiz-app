@@ -47,17 +47,17 @@ const Sidebar = ({
       icon: <MdAccountCircle />,
       to: "/admin/create-quiz",
     },
-    {
-      text: "Manage Students",
-      icon: <FaFileInvoice />,
-      to: "/admin/manage-students",
-    },
+    // {
+    //   text: "Manage Students",
+    //   icon: <FaFileInvoice />,
+    //   to: "/admin/manage-students",
+    // },
     {
       text: "Quiz Reports",
       icon: <HiSpeakerphone />,
       to: "/admin/quiz-reports",
     },
-    { text: "Settings", icon: <FaLightbulb />, to: "/admin/settings" },
+    // { text: "Settings", icon: <FaLightbulb />, to: "/admin/settings" },
   ];
 
   const checkActive = (to) => {

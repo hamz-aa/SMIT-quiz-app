@@ -77,13 +77,9 @@ export async function getQuizQuestion(req, res) {
 export async function updateQuestion(req, res) {
   try {
     const result = await updateQuestionService(req);
-    const user = req.user;
     if (result?.status) {
-      logger.info(`${result.message} ${user.email}`);
-
       res.status(200).json(result);
     } else {
-      logger.error(`${result?.message} ${user.email}`);
       return res.status(403).json(result);
     }
   } catch (error) {

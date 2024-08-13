@@ -13,11 +13,9 @@ const FeedbackModal = ({
   handleFeedbackChange,
   handleFeedbackSubmit,
   feedback,
+  handleCloseFeedback,
 }) => (
-  <Dialog
-    open={isFeedbackModalVisible}
-    // onClose={() => setIsFeedbackModalVisible(false)}
-  >
+  <Dialog open={isFeedbackModalVisible} onClose={handleCloseFeedback}>
     <DialogTitle>Feedback</DialogTitle>
     <DialogContent>
       <TextField
@@ -38,7 +36,7 @@ const FeedbackModal = ({
         Submit
       </Button>
       <Button
-        // onClick={() => setIsFeedbackModalVisible(false)}
+        onClick={handleCloseFeedback}
         variant="outlined"
         color="secondary"
       >

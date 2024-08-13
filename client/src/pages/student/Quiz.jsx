@@ -1,21 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import {
-  CircularProgress,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import QuizHeader from "../../components/quiz/QuizHeader";
 import QuestionCard from "../../components/quiz/QuestionCard";
 import QuizFooter from "../../components/quiz/QuizFooter";
 import QuizResult from "../../components/quiz/QuizResult";
+import { baseUrl } from "../../constants/constants"; // Base URL for API endpoints
+import { UserContext } from "../../contexts/UserContext"; // Assuming UserContext is correctly set up
 
 const QuizApp = () => {
   const [quiz, setQuiz] = useState(null);
+  const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
@@ -34,31 +30,41 @@ const QuizApp = () => {
 
   const { quizId } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
-    const fetchQuiz = async () => {
+    const fetchQuizAndQuestions = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/quizzes/${quizId}`
+        // Fetch quiz data
+        const quizResponse = await axios.get(`${baseUrl}/api/quiz/${quizId}`);
+        const quizData = quizResponse.data.data;
+        setQuiz(quizData);
+        console.log(quizData);
+
+        // Fetch questions for the quiz
+        const questionsResponse = await axios.get(
+          `${baseUrl}/api/question/get/${quizId}`
         );
-        setQuiz(response.data);
-        if (response.data.custom_mode) {
-          setSeconds(
-            response.data.time_limits[response.data.questions[0].difficulty] *
-              60
-          );
+        const questionsData = questionsResponse.data.data;
+        setQuestions(questionsData);
+
+        if (quizData.customMode) {
+          setSeconds(quizData.timeLimits[questionsData[0].difficulty] * 60);
         } else {
-          setTotalSeconds(response.data.duration * 60);
-          setSeconds(response.data.duration * 60);
+          setTotalSeconds(quizData.duration * 60);
+          setSeconds(quizData.duration * 60);
         }
         setLoading(false);
       } catch (error) {
-        console.error("There was an error fetching the quiz!", error);
+        console.error(
+          "There was an error fetching the quiz and questions!",
+          error
+        );
         setLoading(false);
       }
     };
 
-    fetchQuiz();
+    fetchQuizAndQuestions();
   }, [quizId]);
 
   useEffect(() => {
@@ -67,16 +73,14 @@ const QuizApp = () => {
         if (prevSeconds <= 1) {
           clearInterval(interval);
           handleSkipQuestion();
-          return quiz.custom_mode
-            ? quiz.time_limits[
-                quiz.questions[currentQuestionIndex].difficulty
-              ] * 60
+          return quiz.customMode
+            ? quiz.timeLimits[questions[currentQuestionIndex].difficulty] * 60
             : totalSeconds;
         }
         return prevSeconds - 1;
       });
 
-      if (!quiz.custom_mode) {
+      if (!quiz?.customMode) {
         setTotalSeconds((prevTotalSeconds) => {
           if (prevTotalSeconds <= 1) {
             clearInterval(interval);
@@ -111,16 +115,13 @@ const QuizApp = () => {
   }, [tabSwitchAlertShown]);
 
   const handleNextQuestion = useCallback(() => {
-    if (
-      selectedOption === quiz.questions[currentQuestionIndex]?.correct_answer
-    ) {
+    if (selectedOption === questions[currentQuestionIndex]?.correctAnswer) {
       setCorrectAnswers((prev) => prev + 1);
     }
 
-    if (quiz.custom_mode) {
+    if (quiz?.customMode) {
       setSeconds(
-        quiz.time_limits[quiz.questions[currentQuestionIndex + 1]?.difficulty] *
-          60
+        quiz.timeLimits[questions[currentQuestionIndex + 1]?.difficulty] * 60
       );
     }
 
@@ -131,7 +132,7 @@ const QuizApp = () => {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       }
     } else {
-      if (currentQuestionIndex === quiz.questions.length - 1) {
+      if (currentQuestionIndex === questions.length - 1) {
         if (skippedQuestions.length > 0) {
           setShowSkippedQuestions(true);
           setCurrentQuestionIndex(0);
@@ -148,9 +149,8 @@ const QuizApp = () => {
     setTotalTimeTaken(
       (prev) =>
         prev +
-        (quiz.custom_mode
-          ? quiz.time_limits[quiz.questions[currentQuestionIndex].difficulty] *
-              60 -
+        (quiz.customMode
+          ? quiz.timeLimits[questions[currentQuestionIndex].difficulty] * 60 -
             seconds
           : totalSeconds - seconds)
     );
@@ -162,6 +162,7 @@ const QuizApp = () => {
     showSkippedQuestions,
     seconds,
     totalSeconds,
+    questions,
   ]);
 
   const handleOptionSelect = useCallback((option) => {
@@ -170,39 +171,34 @@ const QuizApp = () => {
   }, []);
 
   const handleSkipQuestion = useCallback(() => {
-    setSkippedQuestions((prev) => [
-      ...prev,
-      quiz.questions[currentQuestionIndex],
-    ]);
+    setSkippedQuestions((prev) => [...prev, questions[currentQuestionIndex]]);
     handleNextQuestion();
-  }, [currentQuestionIndex, handleNextQuestion, quiz]);
+  }, [currentQuestionIndex, handleNextQuestion, questions]);
 
   const handleFlagQuestion = useCallback(() => {
     setFlaggedQuestions((prev) => {
-      const currentQuestion = quiz.questions[currentQuestionIndex];
+      const currentQuestion = questions[currentQuestionIndex];
 
       const isFlagged = prev.find(
-        (question) => question.correct_answer === currentQuestion.correct_answer
+        (question) => question.correctAnswer === currentQuestion.correctAnswer
       );
       if (isFlagged) {
         return prev.filter(
-          (question) =>
-            question.correct_answer !== currentQuestion.correct_answer
+          (question) => question.correctAnswer !== currentQuestion.correctAnswer
         );
       } else {
         return [...prev, currentQuestion];
       }
     });
-  }, [currentQuestionIndex, quiz]);
+  }, [currentQuestionIndex, questions]);
 
   const handleSubmitQuiz = () => {
     setShowResult(true);
     setTotalTimeTaken(
       (prev) =>
         prev +
-        (quiz.custom_mode
-          ? quiz.time_limits[quiz.questions[currentQuestionIndex].difficulty] *
-              60 -
+        (quiz.customMode
+          ? quiz.timeLimits[questions[currentQuestionIndex].difficulty] * 60 -
             seconds
           : totalSeconds - seconds)
     );
@@ -234,16 +230,16 @@ const QuizApp = () => {
         <>
           <QuizHeader
             currentQuestionIndex={currentQuestionIndex}
-            totalQuestions={quiz.questions.length}
+            totalQuestions={questions.length}
             seconds={seconds}
             totalSeconds={totalSeconds}
-            customMode={quiz.custom_mode}
+            customMode={quiz.customMode}
             quizCompleted={showResult}
           />
           {!showResult ? (
             <>
               <QuestionCard
-                question={quiz.questions[currentQuestionIndex]}
+                question={questions[currentQuestionIndex]}
                 selectedOption={selectedOption}
                 handleOptionSelect={handleOptionSelect}
               />
@@ -256,9 +252,11 @@ const QuizApp = () => {
             </>
           ) : (
             <QuizResult
+              quizId={quizId}
               correctAnswers={correctAnswers}
-              totalQuestions={quiz.questions.length}
+              totalQuestions={questions.length}
               totalTimeTaken={totalTimeTaken}
+              flaggedQuestions={flaggedQuestions}
             />
           )}
         </>

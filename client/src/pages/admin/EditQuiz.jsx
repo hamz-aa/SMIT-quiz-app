@@ -6,10 +6,13 @@ import AddQuestions from "../../components/quiz/AddQuestions";
 import SecondaryButton from "../../components/common/SecondaryButton";
 import PrimaryButton from "../../components/common/PrimaryButton";
 import ViewQuiz from "../../components/quiz/ViewQuiz";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { baseUrl } from "../../constants/constants";
+import EditQuestions from "../../components/quiz/EditQuestions";
 
 const EditQuiz = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [quiz, setQuiz] = useState(null);
   const [isAddingQuestions, setIsAddingQuestions] = useState(false);
   const [isViewingQuiz, setIsViewingQuiz] = useState(false);
@@ -18,8 +21,8 @@ const EditQuiz = () => {
   useEffect(() => {
     const fetchQuiz = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/quizzes/${id}`);
-        setQuiz(response.data);
+        const response = await axios.get(`${baseUrl}/api/quiz/${id}`);
+        setQuiz(response.data.data);
       } catch (error) {
         console.error("There was an error fetching the quiz!", error);
       }
@@ -40,17 +43,17 @@ const EditQuiz = () => {
 
   const handleTimeLimitChange = (e) => {
     const { name, value } = e.target;
-    setQuiz({ ...quiz, time_limits: { ...quiz.time_limits, [name]: value } });
+    setQuiz({ ...quiz, timeLimits: { ...quiz.timeLimits, [name]: value } }); // Corrected to camelCase
   };
 
   const handleUpdateQuiz = (updatedQuiz) => {
     axios
-      .put(`http://localhost:5000/quizzes/${id}`, updatedQuiz)
+      .put(`${baseUrl}/api/quiz/update/${id}`, updatedQuiz)
       .then(() => {
         setQuiz(updatedQuiz);
         alert("Quiz updated successfully!");
-        setIsAddingQuestions(false);
-        setIsViewingQuiz(true);
+        // setIsAddingQuestions(false);
+        // setIsViewingQuiz(true);
       })
       .catch((error) => {
         console.error("There was an error updating the quiz!", error);
@@ -58,8 +61,7 @@ const EditQuiz = () => {
   };
 
   const handleCancel = () => {
-    setIsAddingQuestions(false);
-    setIsViewingQuiz(false);
+    navigate("/admin/manage-quiz"); // Navigate back to manage quizzes if cancel is clicked
   };
 
   const handleAddQuestions = () => {
@@ -73,6 +75,7 @@ const EditQuiz = () => {
       setError("Please fill in all required fields.");
       return;
     }
+    handleUpdateQuiz(quiz);
     setError("");
     setIsAddingQuestions(true);
   };
@@ -86,14 +89,7 @@ const EditQuiz = () => {
   }
 
   if (isAddingQuestions) {
-    return (
-      <AddQuestions
-        quiz={quiz}
-        setQuiz={setQuiz}
-        handleCreateQuiz={handleUpdateQuiz}
-        handleCancel={handleCancel}
-      />
-    );
+    return <EditQuestions quiz={quiz} handleCancel={handleCancel} />;
   }
 
   return (

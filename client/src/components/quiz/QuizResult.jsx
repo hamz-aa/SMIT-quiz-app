@@ -1,38 +1,54 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import axios from "axios";
+import FeedbackModal from "../../components/quiz/FeedbackModal";
+import { UserContext } from "../../contexts/UserContext"; // Assuming UserContext is correctly set up
+import { baseUrl } from "../../constants/constants"; // Base URL for API endpoints
 
-const QuizResult = ({ correctAnswers, totalQuestions, totalTimeTaken }) => {
+const QuizResult = ({
+  quizId,
+  correctAnswers,
+  totalQuestions,
+  totalTimeTaken,
+  flaggedQuestions,
+}) => {
+  const [isFeedbackModalVisible, setIsFeedbackModalVisible] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Save the quiz report in db.json
-    const saveQuizReport = async () => {
-      const quizReport = {
-        id: Date.now().toString(), // Generating a unique id based on timestamp
-        quizId: "1", // Assuming the quizId is 1, replace it with actual quizId
-        studentId: "1", // Assuming the studentId is 1, replace it with actual studentId
-        score: (correctAnswers / totalQuestions) * 100,
-        dateTaken: new Date().toISOString().split("T")[0],
-        timeTaken: `${Math.floor(totalTimeTaken / 60)} minutes ${
-          totalTimeTaken % 60
-        } seconds`,
-        flagged_questions: [], // Assuming flagged_questions is an empty array, replace it with actual data if available
-      };
+  const handleFeedbackChange = (e) => setFeedback(e.target.value);
 
-      try {
-        await axios.post("http://localhost:5000/quizReports", quizReport);
-      } catch (error) {
-        console.error("Error saving quiz report:", error);
-      }
+  const handleFeedbackSubmit = async () => {
+    setIsFeedbackModalVisible(false);
+
+    const quizReport = {
+      quizId: quizId, // Assuming quizId is stored in the user context
+      studentId: user._id,
+      score: (correctAnswers / totalQuestions) * 100,
+      dateTaken: new Date().toISOString(),
+      timeTaken: `${Math.floor(totalTimeTaken / 60)} minutes ${
+        totalTimeTaken % 60
+      } seconds`,
+      flaggedQuestions,
+      feedback,
     };
 
-    saveQuizReport();
-  }, [correctAnswers, totalQuestions, totalTimeTaken]);
+    try {
+      await axios.post(`${baseUrl}/api/reports/create`, quizReport);
+      navigate("/student/quizzes");
+    } catch (error) {
+      console.error("Error submitting quiz report:", error);
+    }
+  };
 
   const handleBackToHomepage = () => {
-    navigate("/quiz-cards"); // Navigating back to the homepage
+    setIsFeedbackModalVisible(true);
+  };
+
+  const handleCloseFeedback = () => {
+    setIsFeedbackModalVisible(false);
   };
 
   return (
@@ -56,11 +72,18 @@ const QuizResult = ({ correctAnswers, totalQuestions, totalTimeTaken }) => {
               onClick={handleBackToHomepage}
               className="bg-blue-500 text-white"
             >
-              Back to Homepage
+              Submit and Return to Homepage
             </Button>
           </div>
         </CardContent>
       </Card>
+      <FeedbackModal
+        isFeedbackModalVisible={isFeedbackModalVisible}
+        handleFeedbackChange={handleFeedbackChange}
+        handleFeedbackSubmit={handleFeedbackSubmit}
+        feedback={feedback}
+        handleCloseFeedback={handleCloseFeedback}
+      />
     </div>
   );
 };

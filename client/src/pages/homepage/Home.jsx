@@ -1,8 +1,10 @@
 import React from "react";
 import logo from "../../assets/smit-logo.png";
 import landingImg from "../../assets/landimg.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center min-h-screen bg-white">
       <header className="flex items-center justify-between w-full p-4 border-b">
@@ -11,7 +13,10 @@ export default function Home() {
             <img width={"100px"} src={logo} alt="" />
           </span>
         </div>
-        <button className="text-blue-600 border-blue-600 border px-4 py-2 rounded-md hover:bg-blue-100">
+        <button
+          onClick={() => navigate("/login")}
+          className="text-blue-600 border-blue-600 border px-4 py-2 rounded-md hover:bg-blue-100"
+        >
           Login
         </button>
       </header>

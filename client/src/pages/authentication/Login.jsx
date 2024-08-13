@@ -18,30 +18,26 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { setUser, setIsLoggedIn, setIsAdmin } = useContext(UserContext); // Get context functions
+  const { updateUserContext } = useContext(UserContext); // Get updateUserContext function
 
   const handleLogin = async () => {
     try {
       if (email === "admin@mail.com" && password === "admin") {
-        setIsAdmin(true);
-        setIsLoggedIn(true);
-        localStorage.setItem("isAdmin", "true");
-        localStorage.setItem("isLoggedIn", "true");
+        const adminUser = { email, role: "admin" };
+        updateUserContext(adminUser, true);
         navigate("/admin");
       } else {
         const response = await axios.post(`${baseUrl}/api/auth/login`, {
           email,
           password,
         });
+        console.log(email, password);
 
         if (response.status === 200) {
-          const student = response.data.student;
-          setUser(student);
-          setIsLoggedIn(true);
-          setIsAdmin(false);
-          localStorage.setItem("user", JSON.stringify(student));
-          localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("isAdmin", "false");
+          const student = response.data;
+          console.log(student, " student");
+
+          updateUserContext(student, false);
           navigate("/student/quizzes");
         } else {
           setError("Invalid email or password");

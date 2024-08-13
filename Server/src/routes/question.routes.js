@@ -17,6 +17,8 @@ questionRouter.post("/create", createQuestion);
 
 questionRouter.get("/get/:quizId", getQuestionForQuiz);
 
+questionRouter.put("/update/:questionId", updateQuestion);
+
 questionRouter.get("/", jwtAuth, authorizeRole("superAdmin"), getQuestion);
 questionRouter.get(
   "quiz/:quizId",
@@ -24,12 +26,7 @@ questionRouter.get(
   authorizeRole("superAdmin"),
   getQuizQuestion
 );
-questionRouter.put(
-  "/:questionId",
-  jwtAuth,
-  authorizeRole("superAdmin"),
-  updateQuestion
-);
+
 questionRouter.delete(
   "/:questionId",
   jwtAuth,

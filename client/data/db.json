@@ -37,12 +37,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+2?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
+          "options": ["2", "3", "4", "5"],
           "correct_answer": "4"
         },
         {
@@ -51,12 +46,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+3?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "5"
-          ],
+          "options": ["2", "3", "4", "5"],
           "correct_answer": "5"
         },
         {
@@ -65,12 +55,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is 2+4?",
-          "options": [
-            "2",
-            "3",
-            "4",
-            "6"
-          ],
+          "options": ["2", "3", "4", "6"],
           "correct_answer": "6"
         }
       ]
@@ -97,9 +82,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "Who are you?",
-          "options": [
-            ""
-          ]
+          "options": [""]
         }
       ]
     },
@@ -125,12 +108,7 @@
           "points": 3,
           "difficulty": "easy",
           "question": "What is H2O?",
-          "options": [
-            "Water",
-            "Oxygen",
-            "Hydrogen",
-            "Carbon"
-          ],
+          "options": ["Water", "Oxygen", "Hydrogen", "Carbon"],
           "correct_answer": "Water"
         }
       ]
@@ -143,7 +121,7 @@
       "email": "john.doe@example.com",
       "course": "Mathematics",
       "batch": "2023",
-      "instructor": "Dr. Smith"
+      "instructor": "Smith"
     },
     {
       "id": "2",
@@ -151,7 +129,7 @@
       "email": "jane.doe@example.com",
       "course": "Science",
       "batch": "2023",
-      "instructor": "Dr. Johnson"
+      "instructor": "Johnson"
     },
     {
       "id": "1723136363867",
@@ -160,7 +138,7 @@
       "password": "123456",
       "course": "Mathematics",
       "batch": 2024,
-      "instructor": "Dr. Johnson"
+      "instructor": "Johnson"
     }
   ],
   "quizReports": [
@@ -222,10 +200,6 @@
   "settings": {
     "siteName": "QuizMaster",
     "adminEmail": "admin@quizmaster.com",
-    "userRoles": [
-      "admin",
-      "student",
-      "guest"
-    ]
+    "userRoles": ["admin", "student", "guest"]
   }
 }
