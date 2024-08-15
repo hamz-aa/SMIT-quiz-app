@@ -3,17 +3,6 @@ import { QuizModel } from "../models/quizModel.js";
 
 class QuizService {
   createQuizService = async (req) => {
-    // const {
-    //   title,
-    //   description,
-    //   course,
-    //   deadline,
-    //   duration,
-    //   locationRestriction,
-    //   tabSwitchingRestriction,
-    //   customMode,
-    //   time_limits,
-    // } = req.body;
 
     const newQuiz = new QuizModel(req.body);
 

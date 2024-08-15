@@ -1,14 +1,14 @@
 import { bcryptCompareData, bcryptHashingData } from "../helpers/bcrypt.js";
 import { sendMessage } from "../helpers/sendMessage.js";
-import { OTP } from "../models/otp.model.js";
+import { OTP } from "../models/otpModel.js";
 import User from "../repositories/user.js";
-import { UserModel } from "../models/user.model.js";
+import { UserModel } from "../models/userModel.js";
 import passport from "passport";
 import jwt from "jsonwebtoken";
 import { environments } from "../environments/environments.js";
-import { GenerateToken } from "../middlewares/jwt.middleware.js";
+import { GenerateToken } from "../middlewares/jwtMiddleware.js";
 import { logger } from "../index.js";
-import { RefreshTokenModel } from "../models/refreshToken.model.js";
+import { RefreshTokenModel } from "../models/refreshTokenModel.js";
 
 const { verify } = jwt;
 

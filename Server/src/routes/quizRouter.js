@@ -5,9 +5,7 @@ import {
   getAllQuiz,
   getSingleQuiz,
   updateQuiz,
-} from "../controllers/quiz.controller.js";
-import { jwtAuth } from "../middlewares/jwt.middleware.js";
-import { authorizeRole } from "../middlewares/identification.js";
+} from "../controllers/quizController.js";
 
 const quizRouter = express.Router();
 
