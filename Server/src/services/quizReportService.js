@@ -1,6 +1,4 @@
 import { QuizReportModel } from "../models/quizReportModel.js";
-// import { QuizModel } from "../models/Quiz.js";
-// import { StudentModel } from "../models/Student.js";
 
 // Create a new quiz report
 export const createQuizReport = async (reportData) => {

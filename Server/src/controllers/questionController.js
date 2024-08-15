@@ -1,5 +1,5 @@
 import { logger } from "../index.js";
-import { questionService } from "../service/question.service.js";
+import { questionService } from "../service/questionService.js";
 const {
   createQuestionService,
   getQuestionService,
