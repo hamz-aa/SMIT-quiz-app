@@ -1,4 +1,3 @@
-import React from "react";
 import logo from "../../assets/smit-logo.png";
 import landingImg from "../../assets/landimg.svg";
 import { useNavigate } from "react-router-dom";
